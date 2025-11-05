@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { 
   FaHome, 
   FaInfoCircle, 
@@ -9,16 +8,26 @@ import {
   FaPhone
 } from 'react-icons/fa';
 import { Menu, X } from 'lucide-react';
-import { Link as ScrollLink } from 'react-scroll';  // Import ScrollLink
-import ResponsiveLogo from './ResponsiveLogo';
+import { Link as ScrollLink } from 'react-scroll';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 10);
+      setScrolled(window.scrollY > 20);
+
+      const sections = document.querySelectorAll('section');
+      let current = 'home';
+      sections.forEach((section) => {
+        const sectionTop = section.offsetTop - 150;
+        if (window.scrollY >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+      setActiveSection(current);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -28,91 +37,77 @@ const Navbar = () => {
   const navLinks = [
     { to: 'home', icon: <FaHome className="w-5 h-5" />, text: 'Home' },
     { to: 'about', icon: <FaInfoCircle className="w-5 h-5" />, text: 'About' },
-    { to: 'vision-plan', icon: <FaSeedling className="w-5 h-5" />, text: 'Vision Plan' },
+    { to: 'visionplan', icon: <FaSeedling className="w-5 h-5" />, text: 'Vision Plan' },
     { to: 'services', icon: <FaBullseye className="w-5 h-5" />, text: 'Services' },
     { to: 'projects', icon: <FaTrophy className="w-5 h-5" />, text: 'Projects' },
-    { to: 'contact', icon: <FaPhone className="w-5 h-5" />, text: 'Contact' }, // Corrected "quotes" to "contact"
+    { to: 'contact', icon: <FaPhone className="w-5 h-5" />, text: 'Contact' },
   ];
-  
 
   return (
     <>
       {/* Desktop Navbar */}
       <nav
-        className={`hidden lg:flex items-center justify-between px-6 py-4 sticky top-0 transition-all duration-300 z-50 ${
-          scrolled ? 'bg-[#2C3E50] shadow-md' : 'bg-[#2C3E50]'
+        className={`hidden lg:flex items-center justify-between px-6 py-4 fixed top-0 w-full z-50 transition-all duration-300 ${
+          scrolled ? 'bg-[#cec2e1]/95 shadow-md backdrop-blur-sm' : 'bg-[#cec2e1]/80'
         }`}
       >
-        <Link to="/">
-          <ResponsiveLogo
-            scrolled={scrolled}
-            className="transform hover:scale-105"
-          />
-        </Link>
-        <div className="flex items-center space-x-6 text-[#00FFAB]">
+        <h1 className="text-2xl font-bold text-[#7a5fa6]">Astral Solutions</h1>
+
+        <div className="flex items-center space-x-6 text-gray-700">
           {navLinks.map((link, index) => (
             <ScrollLink
               key={index}
               to={link.to}
               smooth={true}
               duration={500}
-              offset={-70}  // Adjust offset for scroll positioning
-              className="flex items-center hover:text-[#B0BEC5] transform transition-transform duration-200 hover:scale-105 cursor-pointer"  // Added cursor-pointer
+              offset={-70}
+              className={`flex items-center gap-2 cursor-pointer transition-all duration-200 hover:text-[#7a5fa6] ${
+                activeSection === link.to ? 'text-[#7a5fa6] font-semibold' : ''
+              }`}
             >
-              <span className="flex-shrink-0 mr-2">{link.icon}</span>
-              <span>{link.text}</span>
+              {link.icon}
+              {link.text}
             </ScrollLink>
           ))}
         </div>
       </nav>
 
-      {/* Mobile Components */}
+      {/* Mobile Navbar */}
       <div className="lg:hidden">
-        {/* Mobile Menu Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="fixed top-4 left-4 z-50 p-2 rounded-md bg-[#2C3E50] text-[#00FFAB] hover:bg-[#37474F]"
+          className="fixed top-4 right-4 z-50 p-2 rounded-md bg-[#cec2e1] text-[#7a5fa6] shadow-md"
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
 
-        {/* Overlay */}
         {isOpen && (
           <div
-            className="fixed inset-0 bg-black bg-opacity-50 z-30"
+            className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
             onClick={() => setIsOpen(false)}
           />
         )}
 
-        {/* Mobile Side Navbar */}
         <nav
-          className={`fixed top-0 left-0 h-full w-64 bg-[#2C3E50] text-[#00FFAB] z-40 transform transition-transform duration-300 ease-in-out ${
-            isOpen ? 'translate-x-0' : '-translate-x-full'
+          className={`fixed top-0 right-0 h-full w-64 bg-[#e4e4e4] text-[#7a5fa6] z-50 transform transition-transform duration-300 ease-in-out ${
+            isOpen ? 'translate-x-0' : 'translate-x-full'
           }`}
         >
-          {/* Logo */}
-          <Link
-            to="/"
-            className="block p-4 text-center border-b border-gray-300"
-            onClick={() => setIsOpen(false)}
-          >
-            <ResponsiveLogo scrolled={false} className="mx-auto" />
-          </Link>
-
-          {/* Nav Links */}
-          <div className="py-4">
+          <div className="flex flex-col mt-20 space-y-6 px-6">
             {navLinks.map((link, index) => (
               <ScrollLink
                 key={index}
                 to={link.to}
                 smooth={true}
                 duration={500}
-                offset={-70}  // Adjust offset for scroll positioning
+                offset={-70}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center px-4 py-3 hover:text-[#B0BEC5] hover:bg-[#37474F] transform transition-transform duration-200 hover:scale-105 cursor-pointer"  // Added cursor-pointer
+                className={`flex items-center gap-3 cursor-pointer transition-all duration-200 hover:text-[#6a4f94] ${
+                  activeSection === link.to ? 'text-[#6a4f94] font-semibold' : ''
+                }`}
               >
-                <span className="flex-shrink-0 w-6">{link.icon}</span>
-                <span className="ml-3">{link.text}</span>
+                {link.icon}
+                {link.text}
               </ScrollLink>
             ))}
           </div>

@@ -4,28 +4,17 @@ import { Link as ScrollLink } from 'react-scroll';
 const Footer = () => {
   const navLinks = [
     { text: "Home", to: "home" },
-  { text: "About", to: "about" },
-  { text: "Vision Plan", to: "vision-plan" },
-  { text: "Services", to: "services" },
-  { text: "Projects", to: "projects" },
-  { text: "Contact", to: "contact" },
+    { text: "About", to: "about" },
+    { text: "Vision Plan", to: "visionplan" },
+    { text: "Services", to: "services" },
+    { text: "Projects", to: "projects" },
+    { text: "Contact", to: "contact" },
   ];
 
   return (
-    <footer className="bg-[#2C3E50] text-[#00FFAB] py-6 mt-12">
-      <div className="container mx-auto px-6 text-center">
-      <p>&copy; {new Date().getFullYear()} Astral Solutions. All rights reserved.</p>
-        <p>
-          Designed with ♥ by{" "}
-          <a
-            href="https://www.astralsolution.tech/"
-            className="text-gray-300 hover:text-gray-100"
-          >
-            Astral Solutions
-          </a>
-          .
-        </p>
-        <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base">
+    <footer className="bg-[#cec2e1] text-gray-700 py-8 mt-12 border-t border-[#e4e4e4]">
+      <div className="container mx-auto text-center space-y-4">
+        <div className="flex flex-wrap justify-center gap-4">
           {navLinks.map((link, index) => (
             <ScrollLink
               key={index}
@@ -33,12 +22,24 @@ const Footer = () => {
               smooth={true}
               duration={500}
               offset={-70}
-              className="hover:text-[#20B2AA] cursor-pointer"
+              className="cursor-pointer hover:text-[#7a5fa6] transition"
             >
               {link.text}
             </ScrollLink>
           ))}
         </div>
+
+        <p className="text-sm">
+          © {new Date().getFullYear()} Astral Solutions. Designed with ♥ by{" "}
+          <a
+            href="https://www.astralsolution.tech/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#7a5fa6] hover:underline"
+          >
+            Astral Solutions
+          </a>.
+        </p>
       </div>
     </footer>
   );
