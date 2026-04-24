@@ -8,12 +8,19 @@ const points = [
 ];
 
 const WhyUsSection = () => (
-  <section className="section section-dark fade-in">
+  <section className="section section-dark why-section fade-in">
     <div className="shell">
-      <h2>Why Astral Solutions</h2>
-      <div className="bullet-list">
-        {points.map((point) => (
-          <p key={point}>• {point}</p>
+      <div className="section-heading">
+        <p className="eyebrow">Why Choose Us</p>
+        <h2>Why Astral Solutions</h2>
+      </div>
+
+      <div className="why-grid">
+        {points.map((point, index) => (
+          <article key={point} className="why-card">
+            <span>{`0${index + 1}`}</span>
+            <p>{point}</p>
+          </article>
         ))}
       </div>
     </div>

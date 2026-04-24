@@ -7,9 +7,16 @@ const stats = [
 ];
 
 const ImpactSection = () => (
-  <section className="section section-light fade-in">
+  <section className="section section-light impact-section fade-in">
     <div className="shell">
-      <h2>Impact Snapshot</h2>
+      <div className="section-heading">
+        <p className="eyebrow">Impact</p>
+        <h2>Impact Snapshot</h2>
+        <p>
+          A quick look at the kind of outcomes Astral Solutions is built to deliver.
+        </p>
+      </div>
+
       <div className="card-grid three-up">
         {stats.map((stat) => (
           <article key={stat.label} className="card stat-card">
