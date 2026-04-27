@@ -1,8 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders Astral Solutions hero heading', async () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const heading = await screen.findByRole('heading', {
+    name: /Building Digital Systems That Help Businesses Grow and Operate Smarter/i,
+  });
+  expect(heading).toBeInTheDocument();
 });
