@@ -9,11 +9,9 @@ const ImpactSection = lazy(() => import('./sections/ImpactSection'));
 const CtaSection = lazy(() => import('./sections/CtaSection'));
 const ContactSection = lazy(() => import('./sections/ContactSection'));
 
-const SectionLoader = () => <div className="shell section-loader">Loading section...</div>;
-
 const Home = () => (
   <>
-    <Suspense fallback={<SectionLoader />}>
+    <Suspense fallback={<div className="mx-auto w-[92vw] max-w-6xl py-8 text-white/70">Loading section...</div>}>
       <HeroSection />
       <ServicesSection />
       <TrainingSection />
@@ -28,7 +26,7 @@ const Home = () => (
       href="https://wa.me/27760000000"
       target="_blank"
       rel="noopener noreferrer"
-      className="whatsapp-float"
+      className="fixed bottom-4 right-4 z-50 rounded-full border border-black bg-white px-4 py-3 text-sm font-semibold text-black shadow-xl transition hover:-translate-y-0.5"
       aria-label="Chat on WhatsApp"
     >
       WhatsApp
