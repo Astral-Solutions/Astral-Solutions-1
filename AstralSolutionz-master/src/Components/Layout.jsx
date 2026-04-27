@@ -4,7 +4,7 @@ import Footer from './Footer';
 
 function Layout({ children }) {
   return (
-    <div className="min-h-screen scroll-smooth bg-black text-white [font-family:Inter,sans-serif]">
+    <div className="site-wrap">
       <Navbar />
       <main>{children}</main>
       <Footer />
